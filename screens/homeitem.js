@@ -1,0 +1,68 @@
+import { Alert, FlatList, Image, Text, View, StyleSheet, Dimensions } from "react-native";
+import React, { Component } from 'react';
+
+const screenWidth = Dimensions.get('window').width;
+const numColumns = 2;
+const itemMargin = 12;
+
+const itemWidth = (screenWidth - itemMargin * 3) / 2
+const itemHeight = itemWidth * 1.246
+
+export default class HomeComp extends Component {
+
+    renderItem = ({ item }) => (
+        <View style={{ marginRight: 12, marginBottom: itemMargin }}>
+            <Image style={[styles.image, { width: itemWidth, height: itemHeight }]} source={{ uri: item.imgUrl }} resizeMode="cover" />
+            <Text style={{ fontSize: 13, fontWeight: "900", color: '#000', marginTop: 6, width: itemWidth }} numberOfLines={1}>{item.name}</Text>
+            <Text style={{ marginTop: 6 }}>{item.author}</Text>
+        </View>
+    )
+
+    keyExtractor = (item) => item.id;
+
+    render() {
+
+        const { items, title } = this.props
+
+        return (
+            <View style={styles.container}>
+                <FlatList style={styles.item} data={items}
+                    renderItem={this.renderItem}
+                    keyExtractor={this.keyExtractor}
+                    numColumns={numColumns}
+                    contentContainerStyle={styles.listContainer}
+                    columnWrapperStyle={{ justifyContent: 'space-between' }} // 两列间距
+                    ListEmptyComponent={<Text>暂无数据</Text>}
+                />
+            </View>
+
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    listContainer: {
+        paddingHorizontal: itemMargin,
+        marginRight: 6
+    },
+    itemContainer: {
+        backgroundColor: '#f2f2f2',
+        borderRadius: 8,
+        marginBottom: 15,
+    },
+    image: {
+        borderRadius: 8,
+    },
+    title: {
+        fontWeight: 'bold',
+        marginTop: 8,
+        fontSize: 16,
+        paddingHorizontal: 5,
+    },
+    author: {
+        marginTop: 4,
+        color: '#666',
+        paddingHorizontal: 5,
+        paddingBottom: 8,
+    },
+});
