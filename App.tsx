@@ -5,7 +5,7 @@
  * @format
  */
 
-import type {PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react';
 import React from 'react';
 
 import {
@@ -26,14 +26,20 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import ScrollView = Animated.ScrollView;
-import HomeStack from './HomeStack';
+// import HomeStack from './HomeStack';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from './screens/home';
+import HomeDetail from './screens/homedetail';
+
+const Stack = createStackNavigator();
 
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function Section({children, title}: SectionProps): JSX.Element {
+function Section({ children, title }: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -67,9 +73,17 @@ function App(): JSX.Element {
   };
 
   return (
-      <HomeStack />
+    // <HomeStack />
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="HomeDetail" component={HomeDetail} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   sectionContainer: {

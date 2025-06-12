@@ -1,5 +1,6 @@
-import { Alert, FlatList, Image, Text, View, StyleSheet, Dimensions } from "react-native";
+import { Alert, FlatList, Image, Text, View, StyleSheet, Dimensions, Pressable } from "react-native";
 import React, { Component } from 'react';
+import { useNavigation } from "@react-navigation/native";
 
 const screenWidth = Dimensions.get('window').width;
 const numColumns = 2;
@@ -7,6 +8,7 @@ const itemMargin = 12;
 
 const itemWidth = (screenWidth - itemMargin * 3) / 2
 const itemHeight = itemWidth * 1.246
+
 
 export default class HomeComp extends Component {
 
