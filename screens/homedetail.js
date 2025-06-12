@@ -21,7 +21,7 @@ export default class HomeDetail extends Component {
     renderStepItem = ({ item }) => (
         <View style={{ paddingBottom: 10 }}>
             <Text style={{ color: '#000', fontSize: 16, fontWeight: 800 }}>步骤{item.stepOrder}</Text>
-            <Image style={{ width: '100%', height: 300, marginTop: 10, borderRadius: 10, marginBottom: 10 }} source={{ uri: item.imgUrl }} resizeMode="cover" />
+            <Image style={{ width: '100%', height: 300, marginTop: 10, borderRadius: 10, marginBottom: 10 }} source={{ uri: item.stepImage }} resizeMode="cover" />
             <Text style={{ marginTop: 6, marginBottom: 10, color: '#000' }}>{item.stepText}</Text>
         </View>
     )
