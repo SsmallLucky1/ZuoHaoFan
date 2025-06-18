@@ -9,16 +9,36 @@ const itemMargin = 12;
 const itemWidth = (screenWidth - itemMargin * 3) / 2
 const itemHeight = itemWidth * 1.246
 
+/**
+ * 首页子组件
+ */
+export default class HomeItem extends Component {
 
-export default class HomeComp extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            navigation: {}
+        };
+    }
 
     renderItem = ({ item }) => (
-        <View style={{ marginRight: 12, marginBottom: itemMargin }}>
-            <Image style={[styles.image, { width: itemWidth, height: itemHeight }]} source={{ uri: item.imgUrl }} resizeMode="cover" />
-            <Text style={{ fontSize: 13, fontWeight: "900", color: '#000', marginTop: 6, width: itemWidth }} numberOfLines={1}>{item.name}</Text>
-            <Text style={{ marginTop: 6 }}>{item.author}</Text>
-        </View>
+        <Pressable onPress={() => {
+            this.goToProfile(item.id)
+        }}>
+            <View style={{ marginRight: 12, marginBottom: itemMargin }}>
+                <Image style={[styles.image, { width: itemWidth, height: itemHeight }]} source={{ uri: item.imgUrl }} resizeMode="cover" />
+                <Text style={{ fontSize: 13, fontWeight: "900", color: '#000', marginTop: 6, width: itemWidth }} numberOfLines={1}>{item.name}</Text>
+                <Text style={{ marginTop: 6 }}>{item.author}</Text>
+            </View>
+        </Pressable>
+
     )
+
+    goToProfile = (recipeId) => {
+        // 通过 this.props.navigation.navigate 跳转
+        this.props.navigation.navigate('HomeDetail', { id: recipeId });
+    };
 
     keyExtractor = (item) => item.id;
 

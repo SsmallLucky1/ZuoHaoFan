@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, Button, Alert, Image } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
+/**
+ * 详情页
+ */
 export default class HomeDetail extends Component {
 
     constructor(props) {
@@ -57,7 +60,8 @@ export default class HomeDetail extends Component {
 
     fetchData = async () => {
         try {
-            const response = await fetch('http://192.168.106.1:8088/zuohaofan/recipes/getRecipeById/54');
+            let { id } = this.props.route.params
+            const response = await fetch('http://192.168.106.1:8088/zuohaofan/recipes/getRecipeById/' + id);
             const detailJson = await response.json();
             this.setState({ recipeDetail: detailJson })
             // Alert.alert('response: ', JSON.stringify(recipeDetail))

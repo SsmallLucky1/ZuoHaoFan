@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, Button, Alert, Pressable } from 'react-native';
-import HomeComp from './homeitem';
+import HomeItem from './homeitem';
 
-function HomeDetail() {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>这是详情页</Text>
-        </View>
-    );
-}
-
+/**
+ *  主页
+ */
 export default class HomeScreen extends Component {
 
     constructor(props) {
@@ -38,18 +33,9 @@ export default class HomeScreen extends Component {
         return (
 
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Pressable onPress={() => {
-                    this.goToProfile()
-                }}>
-                    <HomeComp items={this.state.recipeArr} />
-                </Pressable>
+                <HomeItem items={this.state.recipeArr} navigation={this.props.navigation} />
             </View>
         );
-    };
-
-    goToProfile = () => {
-        // 通过 this.props.navigation.navigate 跳转
-        this.props.navigation.navigate('HomeDetail');
     };
 
     componentDidMount() {
