@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, Alert, Pressable } from 'react-native';
 import HomeItem from './homeitem';
+import { RECIPES } from '../config';
 
 /**
  *  主页
@@ -17,7 +18,7 @@ export default class HomeScreen extends Component {
 
     fetchData = async () => {
         try {
-            const response = await fetch('http://192.168.106.1:8088/zuohaofan/recipes');
+            const response = await fetch(RECIPES);
             const json = await response.json();
             // this.recipeArr = json.data
             this.setState({ recipeArr: json.data })

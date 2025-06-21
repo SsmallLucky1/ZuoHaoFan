@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, Alert, Image } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import Video from 'react-native-video';
 
 /**
  * 详情页
@@ -36,8 +37,17 @@ export default class HomeDetail extends Component {
             <ScrollView>
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     <Image style={{ width: '100%', height: 300 }} source={{ uri: this.state.recipeDetail.imgUrl }} resizeMode="cover" />
-                    <Text style={{ fontSize: 26, fontWeight: 800, color: '#000' }}>{this.state.recipeDetail.name}</Text>
-
+                    <Video
+                        source={{ uri: this.state.recipeDetail.videoUrl }}
+                        style={{ width: '100%', aspectRatio: 16 / 9, display: this.state.recipeDetail.videoUrl ? 'flex' : 'none' }}
+                        controls
+                        resizeMode='cover'
+                        paused={true}
+                        poster={this.state.recipeDetail.poster}
+                        posterResizeMode="cover"
+                    />
+                    <Text style={{ fontSize: 26, fontWeight: 800, color: '#000', marginLeft: 16, marginRight: 16, marginTop: 12 }}>{this.state.recipeDetail.name}</Text>
+                    <Text style={{ fontSize: 16, color: '#000', marginLeft: 16, marginRight: 16, marginTop: 8, lineHeight: 30 }}>{this.state.recipeDetail.description}</Text>
                     <View style={{ width: '100%', padding: 20 }}>
                         <Text style={{ color: '#000', fontSize: 16, fontWeight: 800 }}>用料</Text>
                         <FlatList data={this.state.recipeDetail.ingredients}
@@ -61,7 +71,8 @@ export default class HomeDetail extends Component {
     fetchData = async () => {
         try {
             let { id } = this.props.route.params
-            const response = await fetch('http://192.168.106.1:8088/zuohaofan/recipes/getRecipeById/' + id);
+            // const response = await fetch('http://192.168.106.1:8088/zuohaofan/recipes/getRecipeById/' + id);
+            const response = await fetch(GET_RECIPE_BY_ID + '/' + id);
             const detailJson = await response.json();
             this.setState({ recipeDetail: detailJson })
             // Alert.alert('response: ', JSON.stringify(recipeDetail))

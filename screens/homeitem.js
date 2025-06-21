@@ -1,6 +1,5 @@
 import { Alert, FlatList, Image, Text, View, StyleSheet, Dimensions, Pressable } from "react-native";
 import React, { Component } from 'react';
-import { useNavigation } from "@react-navigation/native";
 
 const screenWidth = Dimensions.get('window').width;
 const numColumns = 2;
