@@ -1,5 +1,6 @@
 import { Alert, FlatList, Image, Text, View, StyleSheet, Dimensions, Pressable } from "react-native";
 import React, { Component } from 'react';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const screenWidth = Dimensions.get('window').width;
 const numColumns = 2;
@@ -35,8 +36,11 @@ export default class HomeItem extends Component {
     )
 
     goToProfile = (recipeId) => {
+        AsyncStorage.clear()
+        AsyncStorage.setItem('recipeId', JSON.stringify(recipeId))
+        AsyncStorage.setItem('index',JSON.stringify(1))
         // 通过 this.props.navigation.navigate 跳转
-        this.props.navigation.navigate('HomeDetail', { id: recipeId });
+        this.props.navigation.navigate('HomeDetail', { id: recipeId, navigation:this.props.navigation });
     };
 
     keyExtractor = (item) => item.id;

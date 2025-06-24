@@ -32,7 +32,6 @@ export default class HomeScreen extends Component {
 
     render() {
         return (
-
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <HomeItem items={this.state.recipeArr} navigation={this.props.navigation} />
             </View>

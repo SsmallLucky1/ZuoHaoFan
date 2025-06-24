@@ -26,11 +26,11 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import ScrollView = Animated.ScrollView;
-// import HomeStack from './HomeStack';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './screens/home';
 import HomeDetail from './screens/homedetail';
+import CameraPage from './screens/camera_page';
 
 const Stack = createStackNavigator();
 
@@ -78,6 +78,7 @@ function App(): JSX.Element {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="HomeDetail" component={HomeDetail} />
+        <Stack.Screen name='CameraPage' component={CameraPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

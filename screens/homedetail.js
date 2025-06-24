@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, Image } from 'react-native';
+import { View, Text, Button, Alert, Image, Pressable } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import Video from 'react-native-video';
+import { GET_RECIPE_BY_ID } from '../config';
 
 /**
  * 详情页
@@ -11,7 +12,8 @@ export default class HomeDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            recipeDetail: {}
+            recipeDetail: {},
+            detailNavigation: {}
         };
     }
 
@@ -36,7 +38,11 @@ export default class HomeDetail extends Component {
         return (
             <ScrollView>
                 <View style={{ flex: 1, alignItems: 'center' }}>
-                    <Image style={{ width: '100%', height: 300 }} source={{ uri: this.state.recipeDetail.imgUrl }} resizeMode="cover" />
+                    <Pressable onPress={this.takePhoto}>
+                        <View style={{ width: 500, height: 300 }}>
+                            <Image style={{ width: '100%', height: 300 }} source={{ uri: this.state.recipeDetail.imgUrl }} resizeMode="cover" />
+                        </View>
+                    </Pressable>
                     <Video
                         source={{ uri: this.state.recipeDetail.videoUrl }}
                         style={{ width: '100%', aspectRatio: 16 / 9, display: this.state.recipeDetail.videoUrl ? 'flex' : 'none' }}
@@ -70,8 +76,8 @@ export default class HomeDetail extends Component {
 
     fetchData = async () => {
         try {
-            let { id } = this.props.route.params
-            // const response = await fetch('http://192.168.106.1:8088/zuohaofan/recipes/getRecipeById/' + id);
+            let { id, navigation } = this.props.route.params
+            this.setState({ detailNavigation: navigation })
             const response = await fetch(GET_RECIPE_BY_ID + '/' + id);
             const detailJson = await response.json();
             this.setState({ recipeDetail: detailJson })
@@ -84,6 +90,53 @@ export default class HomeDetail extends Component {
     };
 
     componentDidMount() {
+        this.getStorage()
         this.fetchData();
+    }
+
+    getStorage = async () => {
+
+        // async 后延迟3秒调用另一个方法的写法
+        // const p1 = AsyncStorage.getAllKeys((err, keys) => {
+        //     setTimeout(() => {
+        //         this.getMultiGet(keys)
+        //     }, 3000)
+        // })
+
+        // async 配合 await 的写法
+        // const p1 = AsyncStorage.getAllKeys((err, keys) => {
+        //     return keys
+        // })
+
+        // let keys = await p1
+
+        // AsyncStorage.getAllKeys((err, keys) => {
+        //     AsyncStorage.multiGet(keys, (err, stores) => {
+        //         Alert.alert('data', JSON.stringify(stores))
+        //     })
+        // })
+
+        // 嵌套写法
+        // AsyncStorage.getAllKeys((err, keys) => {
+        //     AsyncStorage.multiGet(keys, (err, stores) => {
+        //         Alert.alert('data',JSON.stringify(stores))
+        //         // stores.map((result, i, store) => {
+        //         //     // get at each store's key/value so you can work with it
+        //         //     let key = store[i][0];
+        //         //     let value = store[i][1];
+        //         //     console.log('key:' + key + ' value:' + value)
+        //         // });
+        //     });
+        // });
+    }
+
+    // getMultiGet(keys) {
+    //     const p2 = AsyncStorage.multiGet(keys, (err, stores) => {
+    //         Alert.alert('data', JSON.stringify(stores))
+    //     })
+    // }
+
+    takePhoto = () => {
+        this.state.detailNavigation.navigate('CameraPage');
     }
 }
